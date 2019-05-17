@@ -1,0 +1,49 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.0.M3'
+	id 'java'
+	id 'checkstyle'
+	id 'com.github.spotbugs' version '1.7.1'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/snapshot' }
+	maven { url 'https://repo.spring.io/milestone' }
+}
+
+dependencies {
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.data:spring-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-devtools'
+	implementation 'org.liquibase:liquibase-core:3.6.3'
+	implementation 'org.postgresql:postgresql:42.2.5'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	runtime 'com.h2database:h2:1.4.199'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+checkstyle {
+	toolVersion = '8.19'
+	maxWarnings = 0
+}
+
+tasks.withType(com.github.spotbugs.SpotBugsTask) {
+	reports {
+		xml.enabled = false
+		html.enabled = true
+	}
+}
