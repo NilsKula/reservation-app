@@ -1,0 +1,49 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet author="nils" id="1558374558182-1">
+        <createSequence sequenceName="reservation_seq"/>
+        <createTable tableName="reservations">
+            <column name="id" type="BIGINT" defaultValueSequenceNext="reservation_seq">
+                <constraints primaryKey="true" primaryKeyName="reservations_pkey"/>
+            </column>
+            <column name="check_in" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="check_out" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="room_number" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="nils" id="1558374558182-2">
+        <createTable tableName="rooms">
+            <column name="room_number" type="INTEGER">
+                <constraints primaryKey="true" primaryKeyName="rooms_pkey"/>
+            </column>
+            <column name="price" type="numeric(19, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="room_size" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="nils" id="1558374558182-3">
+        <addForeignKeyConstraint baseColumnNames="room_number"
+                                 baseTableName="reservations"
+                                 constraintName="fk_reservations_roomNumber_rooms_roomNumber"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="CASCADE"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="room_number"
+                                 referencedTableName="rooms" validate="true"/>
+        <addUniqueConstraint tableName="rooms"
+                             columnNames="room_number"/>
+    </changeSet>
+</databaseChangeLog>

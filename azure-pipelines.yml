@@ -1,0 +1,9 @@
+pool:
+  vmImage: 'Ubuntu-16.04'
+
+steps:
+  - script: |
+      docker build -t reservation-app:latest .
+      docker run --rm -u root reservation-app:latest build
+      docker run --rm -u root reservation-app:latest build -v $PWD:$PWD -w $PWD -v /var/run/docker.sock:/var/run/docker.sock
+    displayName: 'Build'
