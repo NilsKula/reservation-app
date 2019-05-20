@@ -127,7 +127,7 @@ Status code: ```200 OK```
 **View available rooms**
 *Request:*
 
-```GET http://localhost:8080/public-api/rooms/{room-number}/reserve```
+```GET http://localhost:8080/public-api/rooms/search```
 
 Where query parameters are:
 
